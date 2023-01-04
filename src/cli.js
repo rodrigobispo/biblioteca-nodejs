@@ -5,8 +5,17 @@ import exibeConteudoArquivo from "./index.js";
 const caminhoDaLinhaDeComando = process.argv;
 
 async function processaTexto(argumentos) {
-
+    
     const caminho = argumentos[2];
+
+    try {
+        fs.lstatSync(caminho);
+    } catch (error) {
+        if (error.code === 'ENOENT') {
+            console.log(chalk.red('arquivo ou diretório inexistente.'))
+            return;
+        }
+    }
 
     if (fs.lstatSync(caminho).isFile()) {
 
@@ -25,7 +34,7 @@ async function processaTexto(argumentos) {
 
 async function imprimeListaDeLinks(caminho) {
     const resultado = await exibeConteudoArquivo(caminho);
-    console.log(chalk.yellow('lista de links'), resultado);
+    console.log(chalk.yellow('lista de links'), chalk.bgGreen(caminho), resultado);
 }
 
 processaTexto(caminhoDaLinhaDeComando);
