@@ -18,3 +18,8 @@ Ou até mesmo passar o caminho do diretório que contém os arquivos, como os ex
 Outra maneira de execução por script (definido no package.json):
 > npm run cli \<caminho-da-pasta-ou-arquivo-direto\>
 
+Informando uma flag de validação, "valida":
+> npm run cli ./arquivos/texto.md -- valida
+
+> npm run cli:valida
+
