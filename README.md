@@ -15,3 +15,6 @@ Aplicação que captura links de um arquivo md (markdown); Construção de códi
 Ou até mesmo passar o caminho do diretório que contém os arquivos, como os exemplos:
 > node src/cli.js arquivos | node src/cli.js arquivos/ | node src/cli.js ./arquivos
 
+Outra maneira de execução por script (definido no package.json):
+> npm run cli \<caminho-da-pasta-ou-arquivo-direto\>
+
