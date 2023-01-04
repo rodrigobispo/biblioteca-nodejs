@@ -1,11 +1,31 @@
 import chalk from "chalk";
+import fs from 'fs';
 import exibeConteudoArquivo from "./index.js";
 
-const caminho = process.argv;
+const caminhoDaLinhaDeComando = process.argv;
 
-async function processaTexto(caminho) {
-    const resultado = await exibeConteudoArquivo(caminho[2]);
-    console.log(chalk.yellow('lista de links'), resultado)
+async function processaTexto(argumentos) {
+
+    const caminho = argumentos[2];
+
+    if (fs.lstatSync(caminho).isFile()) {
+
+        imprimeListaDeLinks(caminho);
+
+    } else if (fs.lstatSync(caminho).isDirectory()) {
+
+        const arquivos = await fs.promises.readdir(caminho);
+
+        arquivos.forEach(async nomeDeArquivo => {
+            imprimeListaDeLinks(`${caminho}/${nomeDeArquivo}`);
+        })
+        console.log(arquivos);
+    }
 }
 
-processaTexto(caminho)
+async function imprimeListaDeLinks(caminho) {
+    const resultado = await exibeConteudoArquivo(caminho);
+    console.log(chalk.yellow('lista de links'), resultado);
+}
+
+processaTexto(caminhoDaLinhaDeComando);

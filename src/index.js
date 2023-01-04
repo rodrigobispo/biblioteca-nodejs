@@ -1,12 +1,12 @@
 import fs from 'fs';
 import chalk from "chalk";
 
-function extraiLinks(texto) {
+function extraiLinks(texto, caminho) {
     const regex = /\[([^[\]]*?)\]\((https?:\/\/[^\s?#.].[^\s]*)\)/gm;
     const capturas = [...texto.matchAll(regex)];
     const resultados = capturas.map(captura => ({[captura[1]]: captura[2]}));
     
-    return resultados.length !== 0 ? resultados : 'não possui link no arquivo';
+    return resultados.length !== 0 ? resultados : `não possui link no arquivo ${caminho}`;
 }
 
 function trataErro(erro) {
@@ -18,7 +18,7 @@ async function exibeConteudoArquivo(caminhoDoArquivo) {
     try {        
         const encoding = 'utf-8';
         const texto = await fs.promises.readFile(caminhoDoArquivo, encoding)
-        return extraiLinks(texto);
+        return extraiLinks(texto, caminhoDoArquivo);
     } catch (error) {
         trataErro(error);
     } finally {
